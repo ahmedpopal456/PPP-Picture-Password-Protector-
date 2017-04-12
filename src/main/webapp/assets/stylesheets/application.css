@@ -46,6 +46,12 @@ form .error { color: #c55; margin: 0 10px; }
     overflow: hidden;
 }
 
+#canvas {
+
+    background-color: red;
+}
+
+
 .upload_button_holder .upload_button {
     display: block;
     position: relative;

@@ -1,5 +1,4 @@
 package social;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,7 +12,7 @@ import java.net.URLEncoder;
 public class FBConnection {
 	public static final String FB_APP_ID = "712625008922950";
 	public static final String FB_APP_SECRET = "0fa4cc3ae43ee537fbe778a26647c27a";
-	public static final String REDIRECT_URI = "http://localhost:8080/login"; // "https://coen498-project.appspot.com/login";
+	public static final String REDIRECT_URI = "http://localhost:8080/login"; // "http://https://coen498-project.appspot.com/login";
 
 	static String accessToken = "";
 
@@ -30,6 +29,7 @@ public class FBConnection {
 		return fbLoginUrl;
 	}
 
+
 	public String getFBGraphUrl(String code) {
 		String fbGraphUrl = "";
 		try {
@@ -44,6 +44,7 @@ public class FBConnection {
 	}
 
 	public String getAccessToken(String code) {
+		accessToken = "";
 		if ("".equals(accessToken)) {
 			URL fbGraphURL;
 			try {

@@ -23,7 +23,8 @@ public class PhotoUpload extends StoredFile {
     	this.resourceType = entity.getProperty("resource_type").toString();
     	this.title = entity.getProperty("title").toString();
     }
-    
+
+
     public String getUrl() {
         if (version != null && format != null && publicId != null) {
             return Singleton.getCloudinary().url()
