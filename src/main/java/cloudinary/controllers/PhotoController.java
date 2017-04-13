@@ -34,9 +34,9 @@ import javax.servlet.http.*;
 
 public class PhotoController extends HttpServlet {
 
-	private final static GAEConnectionManager connectionManager = new GAEConnectionManager();
+    private final static GAEConnectionManager connectionManager = new GAEConnectionManager();
     private static final long serialVersionUID = 1L;
-    private String code="";
+    private String code = "";
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String login(ModelMap model) {
@@ -71,6 +71,10 @@ public class PhotoController extends HttpServlet {
         usercookie.setMaxAge(10000); //set expire time to 10000 sec
         res.addCookie(usercookie); //put cookie in response
 
+        Cookie usernamecookie = new Cookie("username", fbProfileData.get("name")); // http://stackoverflow.com/questions/26652679/passing-parameters-from-jsp-to-spring-controller-method
+        usernamecookie.setMaxAge(10000); //set expire time to 10000 sec
+        res.addCookie(usernamecookie); //put cookie in response
+
         Cookie accesstoken = new Cookie("accesstoken", accessToken); // http://stackoverflow.com/questions/26652679/passing-parameters-from-jsp-to-spring-controller-method
         accesstoken.setMaxAge(10000); //set expire time to 10000 sec
         res.addCookie(accesstoken); //put cookie in response
@@ -86,8 +90,11 @@ public class PhotoController extends HttpServlet {
         }
 
         model.addAttribute("photos", photos);
-        return "photos";//;"index"
+
+        return "redirect:" + "http://localhost:8080/homepage"; //;//;"index"
     }
+
+
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String getFBLogoutUrl(HttpServletRequest req, HttpServletResponse res) {
@@ -110,7 +117,7 @@ public class PhotoController extends HttpServlet {
     }
 
     @RequestMapping(value = "/homepage", method = RequestMethod.GET)
-    public String homepage(@CookieValue("userid") String userid,ModelMap model) {
+    public String homepage(@CookieValue("userid") String userid, @CookieValue("username") String username, ModelMap model) {
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         Key photoKey = KeyFactory.createKey("photos", userid); //model.get("current_user_id").toString()
@@ -124,6 +131,9 @@ public class PhotoController extends HttpServlet {
         }
 
         model.addAttribute("photos", photos);
+        model.addAttribute("current_user_id", userid); // STORING CURRENT USER'S ID
+        model.addAttribute("current_user_name", username); // STORING CURRENT USER'S NA
+
         return "photos";//;"index"
     }
 
@@ -145,6 +155,9 @@ public class PhotoController extends HttpServlet {
             lcountermax++;
         if(!password3.equals(""))
             lcountermax++;
+
+        if((lcountermax == 0) || format.equals("") || publicid.equals(""))
+            return "redirect:" + "http://localhost:8080/homepage";
 
         // BEGINNING
         Map apiresponse = null;
