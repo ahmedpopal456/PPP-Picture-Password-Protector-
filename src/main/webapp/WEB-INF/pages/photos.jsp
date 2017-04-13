@@ -54,6 +54,9 @@
             var imageid = "";
             var imageformat = "";
 
+            var image_id = "";
+
+
             function drawImage(url,id,format){
                 var ctx = $("canvas")[0].getContext("2d"),
                     img = new Image();
@@ -70,13 +73,13 @@
 
                 imageurl = url;
                 imageid = id;
+                image_id = id;
                 imageformat = format;
-
 
                 document.getElementById("imageurl").value = imageurl;
                 document.getElementById("imageformat").value = imageformat;
                 document.getElementById("imageid").value = imageid;
-
+                document.getElementById("image_id").value = image_id;
             }
 
             <c:if test="${!empty photos}">
@@ -92,6 +95,15 @@
     </canvas>
     <a id="addPhotoButton" class= "upload_link" onclick="popupCenter('upload_form', 'myPop1',600,375);" href="javascript:void(0);">Add Image</a>
     <a id= "addPasswordButton" class= "upload_link" onclick="popupCenter('direct_upload_form', 'myPop1',450,330);" href="javascript:void(0);">List of Passwords</a>
+
+    <form:form cssStyle="border: none" method="post" action = "delete" modelAttribute="returnURL" enctype="multipart/form-data">
+        <div id = "deletePhotoButton" class="form_line">
+            <div class="form_controls">
+                <input id="image_id" name="image_id" type="hidden" value="">
+                <input  class="upload_link" type="submit" value="Clear All"/>
+            </div>
+        </div>
+    </form:form>
 
     <form:form cssStyle="border: none" method="post" action = "transform" modelAttribute="returnURL" enctype="multipart/form-data">
     <div id = "transformButton" class="form_line">

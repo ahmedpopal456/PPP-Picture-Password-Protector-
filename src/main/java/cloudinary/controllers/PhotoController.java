@@ -81,7 +81,7 @@ public class PhotoController extends HttpServlet {
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         Key photoKey = KeyFactory.createKey("photos", fbProfileData.get("id")); //model.get("current_user_id").toString()
-        List<Entity> photoEntities = datastore.prepare(new Query("photo", photoKey)).asList(FetchOptions.Builder.withDefaults());
+        List<Entity> photoEntities = datastore.prepare(new Query("photo",photoKey)).asList(FetchOptions.Builder.withDefaults());
         List<PhotoUpload> photos = new java.util.ArrayList<PhotoUpload>();
 
         for(int i = 0, n = photoEntities.size(); i < n; i++)
@@ -124,10 +124,9 @@ public class PhotoController extends HttpServlet {
         List<Entity> photoEntities = datastore.prepare(new Query("photo", photoKey)).asList(FetchOptions.Builder.withDefaults());
         List<PhotoUpload> photos = new java.util.ArrayList<PhotoUpload>();
 
-
-        for(int i = 0, n = photoEntities.size(); i < n; i++)
-        {
-            photos.add(new PhotoUpload(photoEntities.get(i)));
+        for(int i = 0, n = photoEntities.size(); i < n; i++) {
+            PhotoUpload photoUpload = new PhotoUpload(photoEntities.get(i));
+            photos.add(photoUpload);
         }
 
         model.addAttribute("photos", photos);
@@ -144,8 +143,6 @@ public class PhotoController extends HttpServlet {
         Key photoKey = KeyFactory.createKey("transformed_photos", userid); //model.get("current_user_id").toString()
         List<Entity> photoEntities = datastore.prepare(new Query("photo", photoKey)).asList(FetchOptions.Builder.withDefaults());
         List<PhotoUpload> photos = new java.util.ArrayList<PhotoUpload>();
-
-
 
         for(int i = 0, n = photoEntities.size(); i < n; i++)
         {
@@ -182,7 +179,7 @@ public class PhotoController extends HttpServlet {
         datastore.put(photo);
 
         Key photoKey2 = KeyFactory.createKey("photos", userid); //model.get("current_user_id").toString()
-        List<Entity> photoEntities = datastore.prepare(new Query("photo", photoKey2)).asList(FetchOptions.Builder.withDefaults());
+        List<Entity> photoEntities = datastore.prepare(new Query("photo",photoKey2)).asList(FetchOptions.Builder.withDefaults());
         List<PhotoUpload> photos = new java.util.ArrayList<PhotoUpload>();
 
 
@@ -196,6 +193,21 @@ public class PhotoController extends HttpServlet {
         model.addAttribute("current_user_name", username); // STORING CURRENT USER'S NA
 
         return "photos";//;"index"
+    }
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public String deletephoto(@ModelAttribute("returnURL") String returnURL, @CookieValue("userid") String userid,@RequestParam(value = "image_id") String publicid, ModelMap model) throws IOException {
+
+        Key photoKey = KeyFactory.createKey("photos", userid);
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+
+        List<Entity> photoEntities = datastore.prepare(new Query("photo",photoKey)).asList(FetchOptions.Builder.withDefaults());
+
+        for(int i = 0, n = photoEntities.size(); i < n; i++)
+        {
+            datastore.delete(photoEntities.get(i).getKey());
+        }
+
+        return "redirect:" + "http://localhost:8080/homepage";
     }
 
     @RequestMapping(value = "/transform", method = RequestMethod.POST)

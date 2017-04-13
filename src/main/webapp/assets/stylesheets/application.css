@@ -122,13 +122,19 @@ html{
     top: 94%;
     left: 20px;
     float: left;
+}
 
+#deletePhotoButton{
+    position: absolute;
+    top: 94%;
+    left: 140px;
+    float: left;
 }
 
 #addPasswordButton{
     position: absolute;
     top: 94%;
-    right: 350px;
+    right: 300px;
     float: right;
 }
 
