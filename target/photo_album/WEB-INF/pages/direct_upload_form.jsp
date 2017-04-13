@@ -63,7 +63,6 @@
         else
         {
             setCookie("password3", "", 1);
-
         }
 
         window.opener.confirmExit();

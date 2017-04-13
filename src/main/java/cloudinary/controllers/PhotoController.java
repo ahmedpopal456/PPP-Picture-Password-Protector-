@@ -137,6 +137,67 @@ public class PhotoController extends HttpServlet {
         return "photos";//;"index"
     }
 
+    @RequestMapping(value = "/gallery", method = RequestMethod.GET)
+    public String gallery(@CookieValue("userid") String userid, @CookieValue("username") String username, ModelMap model) {
+
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        Key photoKey = KeyFactory.createKey("transformed_photos", userid); //model.get("current_user_id").toString()
+        List<Entity> photoEntities = datastore.prepare(new Query("photo", photoKey)).asList(FetchOptions.Builder.withDefaults());
+        List<PhotoUpload> photos = new java.util.ArrayList<PhotoUpload>();
+
+
+
+        for(int i = 0, n = photoEntities.size(); i < n; i++)
+        {
+            PhotoUpload photoUpload = new PhotoUpload(photoEntities.get(i));
+            photos.add(photoUpload);
+        }
+
+        model.addAttribute("photos", photos);
+        model.addAttribute("current_user_id", userid); // STORING CURRENT USER'S ID
+        model.addAttribute("current_user_name", username); // STORING CURRENT USER'S NA
+
+        return "gallery";//;"index"
+    }
+
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    public String save(@ModelAttribute("returnURL") String returnURL, @CookieValue("userid") String userid,  @RequestParam(value = "imageurl") String url,@RequestParam(value = "imageformat") String format,@RequestParam(value = "imageid") String id, @CookieValue("username") String username, ModelMap model) {
+
+        PhotoUpload photoUpload = new PhotoUpload();
+        Key photoKey1 = KeyFactory.createKey("transformed_photos", userid); //model.get("current_user_id").toString()
+        Entity photo = new Entity("photo", photoKey1);
+
+        String transURL = url.substring(url.indexOf("'") + 1, url.indexOf("'",  20));
+
+        photoUpload.setPublicId(transURL);
+        photoUpload.setTitle(id);
+        photoUpload.setFormat(format);
+        photoUpload.setVersion(Long.MAX_VALUE);
+        photoUpload.setResourceType("");
+        photoUpload.setType("");
+
+        photoUpload.toEntity(photo);
+
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        datastore.put(photo);
+
+        Key photoKey2 = KeyFactory.createKey("photos", userid); //model.get("current_user_id").toString()
+        List<Entity> photoEntities = datastore.prepare(new Query("photo", photoKey2)).asList(FetchOptions.Builder.withDefaults());
+        List<PhotoUpload> photos = new java.util.ArrayList<PhotoUpload>();
+
+
+        for(int i = 0, n = photoEntities.size(); i < n; i++)
+        {
+            photos.add(new PhotoUpload(photoEntities.get(i)));
+        }
+
+        model.addAttribute("photos", photos);
+        model.addAttribute("current_user_id", userid); // STORING CURRENT USER'S ID
+        model.addAttribute("current_user_name", username); // STORING CURRENT USER'S NA
+
+        return "photos";//;"index"
+    }
+
     @RequestMapping(value = "/transform", method = RequestMethod.POST)
     public String transformPhoto(@ModelAttribute("returnURL") String returnURL, @CookieValue("userid") String userid,  @RequestParam(value = "imageurl") String url, @RequestParam(value = "imageformat") String format, @RequestParam(value = "password_input1") String password1, @RequestParam(value = "password_input2") String password2,@RequestParam(value = "password_input3") String password3 ,@RequestParam(value = "imageid") String publicid, ModelMap model) throws IOException {
 
@@ -467,9 +528,11 @@ public class PhotoController extends HttpServlet {
         }
         else
         {
-            returnURL = "<a>Could Not Transform Image</a>";
+            return "redirect:" + "http://localhost:8080/homepage";
         }
 
+        model.addAttribute("publicid",publicid);
+        model.addAttribute("format",publicid);
         model.addAttribute("returnURL", returnURL);
         return "transformed";
     }
