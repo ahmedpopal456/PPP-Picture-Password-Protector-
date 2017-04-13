@@ -33,7 +33,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../gmultipart-master/target/gmultipart-0.4.jar!/" />
+          <root url="jar://C:/Users/gmultipart-master/target/gmultipart-0.4.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -97,7 +97,16 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../json-simple-1.1.1.jar!/" />
+          <root url="jar://C:/Users/json-simple-1.1.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/gmultipart-0.4.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

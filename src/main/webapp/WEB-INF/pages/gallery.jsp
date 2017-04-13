@@ -10,17 +10,18 @@
 %>
 <body id="photoPage">
 <div id = "mainHeader" >
-    <h1 id= "welcomeMainHeader">Picture Password Protector </h1>
+    <img id="logoImage" src=http://res.cloudinary.com/dr1g3e4hb/image/upload/v1492082557/snhaxbjfbxauwm4jchnq.png alt="logo" />
+
+    <h1 id= "welcomeMainHeader">PICTURE PASSWORD PROTECTOR </h1>
     <h2 id="welcomeHeader">Welcome ${current_user_name} </h2>
-    <div>
-        <a href = "/logout">Logout from Facebook</a></div>
-</div>
+
 </div>
 
 <div id = "mainTabs">
     <a class = "tabButton" href="<c:url value="http://localhost:8080/homepage"/>" class="back_link">HOME</a>
     <a class = "tabButton" href="<c:url value="http://localhost:8080/gallery"/>" class="back_link">TRANSFORMED GALLERY</a>
     <a class = "tabButton" href="<c:url value="http://localhost:8080/help"/>" class="back_link">HELP</a>
+    <a class = "tabButton" href="<c:url value="http://localhost:8080/logout"/>" class="back_link">LOGOUT</a>
 </div>
 
 <div id = "photoBody">

@@ -10,17 +10,17 @@
 %>
 <body id="photoPage">
 <div id = "mainHeader" >
-    <h1 id = "welcomeMainHeader">Picture Password Protector </h1>
+    <img id="logoImage" src=http://res.cloudinary.com/dr1g3e4hb/image/upload/v1492082557/snhaxbjfbxauwm4jchnq.png alt="logo" />
+    <h1 id = "welcomeMainHeader">PICTURE PASSWORD PROTECTOR </h1>
     <h2 id="welcomeHeader">Welcome ${current_user_name} </h2>
-    <div>
-        <a href = "/logout">Logout from Facebook</a></div>
-</div>
+
 </div>
 
 <div id = "mainTabs">
     <a class = "tabButton" href="<c:url value="http://localhost:8080/homepage"/>" class="back_link">HOME</a>
     <a class = "tabButton" href="<c:url value="http://localhost:8080/gallery"/>" class="back_link">TRANSFORMED GALLERY</a>
     <a class = "tabButton" href="<c:url value="http://localhost:8080/help"/>" class="back_link">HELP</a>
+    <a class = "tabButton" href="<c:url value="http://localhost:8080/logout"/>" class="back_link">LOGOUT</a>
 </div>
 
 <div id = "photoBody">
@@ -35,7 +35,7 @@
                     <h2>${photo.title}</h2>
                     <c:if test="${photo.isImage}">
                         <a href="<cl:url storedSrc="${photo}" format="jpg"/>" target="_blank">
-                            <cl:image storedSrc="${photo}" extraClasses="thumbnail inline" width="250" height="150" crop="fit" quality="100" format="jpg"/>
+                            <cl:image storedSrc="${photo}" extraClasses="thumbnail inline"  width="250" height="150" crop="fit" quality="100" format="jpg"/>
                         </a>
                         <td>
                             <br/>
@@ -90,7 +90,7 @@
         </script>
     </div>
 
-    <canvas id = "canvas">
+    <canvas id = "canvas" >
 
     </canvas>
     <a id="addPhotoButton" class= "upload_link" onclick="popupCenter('upload_form', 'myPop1',600,375);" href="javascript:void(0);">Add Image</a>
