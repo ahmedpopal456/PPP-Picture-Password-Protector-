@@ -2,112 +2,81 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 <%@include file="pre.jsp"%>
-
-<div id="direct_upload">
-    <h1>New Photo</h1>
-    <h2>Direct upload from the browser</h2>
-    <p>You can also drag and drop an image file into the dashed area.</p>
-    <form:form method="post" action="upload" commandName="photo" enctype="multipart/form-data">
-        <div class="form_line">
-            <form:label path="title">Title:</form:label>
-            <div class="form_controls">
-                <form:input path="title"/>
-                <form:errors path="title" extraClasses="error" />
-            </div>
-        </div>
-        <div class="form_line">
-            <label>Image:</label>
-            <div class="form_controls">
-                <div class="upload_button_holder">
-                    <a href="#" class="upload_button">Upload</a>
-                    <cl:upload fieldName="preloadedFile" transformation="w_1000,h_1000,c_limit"
-                            eager="c_scale,w_150,h_150|c_fit,w_150,h_150" extraClasses="extra" exif="true"
-                            imageMetadata="true" colors="true" faces="true"/>
-                </div>
-                <span class="status"></span>
-            </div>
-        </div>
-        <div class="form_line">
-            <div class="form_controls">
-                <div class="preview"></div>
-            </div>
-        </div>
-        <div class="form_line">
-            <div class="form_controls">
-                <input type="submit" value="Submit Photo">
-            <form:errors path="signature" extraClasses="error" />
-            </div>
-        </div>
-    </form:form>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <title>Please Input Up to Three Passwords</title>
+</head>
+<p style="font-size:14px; font-style:normal;">Please Input Up to Three Passwords</p>
+<br>
+<div class="input-group">
+    <span class="input-group-addon" id="basic-addon1">@</span>
+    <input id="password1" type="text" class="form-control" placeholder="Password 1" aria-describedby="basic-addon1">
 </div>
+<br>
+<div class="input-group">
+    <span class="input-group-addon" id="basic-addon2">@</span>
+    <input id="password2" type="text" class="form-control" placeholder="Password 2" aria-describedby="basic-addon1">
+</div>
+<br>
+<div class="input-group">
+    <span class="input-group-addon" id="basic-addon3">@</span>
+    <input id="password3" type="text" class="form-control" placeholder="Password 3" aria-describedby="basic-addon1">
+</div>
+<br>
+<a id="input_text" class= "upload_link" onclick="submitForm();" href="javascript:void(0);">Submit Form</a>
+</body>
+<%@include file="post.jsp"%>
+</html>
 
-<a href="<c:url value="http://localhost:8080/homepage"/>" class="back_link">Back to list</a>
+<script>
+    function submitForm() {
 
-<div id="info"></div>
+        var password1 = document.getElementById("password1").value;
+        var password2 = document.getElementById("password2").value;
+        var password3 = document.getElementById("password3").value;
 
-<cl:jsinclude/>
+        if (!(password1 == "")){
 
-<!-- Configure Cloudinary jQuery plugin -->
-<cl:jsconfig/>
+            setCookie("password1", password1, 1);
+        }
+        else
+        {
+            setCookie("password1", "", 1);
+        }
 
-<script type="text/javascript">
-    $(document).ready(function() {
-        // Cloudinary jQuery integration library uses jQuery File Upload widget
-        // (see http://blueimp.github.io/jQuery-File-Upload/).
-        // Any file input field with cloudinary-fileupload class is automatically
-        // wrapped using the File Upload widget and configured for Cloudinary uploads.
-        // You can further customize the configuration using .fileupload method
-        // as we do below.
-        $(".cloudinary-fileupload")
-                .fileupload({
-                    // Uncomment the following lines to enable client side image resizing and valiation.
-                    // Make sure cloudinary/processing is included the js file
-                    //disableImageResize: false,
-                    //imageMaxWidth: 800,
-                    //imageMaxHeight: 600,
-                    //acceptFileTypes: /(\.|\/)(gif|jpe?g|png|bmp|ico)$/i,
-                    //maxFileSize: 20000000, // 20MB
-                    dropZone: "#direct_upload",
-                    start: function (e) {
-                        $(".status").text("Starting upload...");
-                    },
-                    progress: function (e, data) {
-                        $(".status").text("Uploading... " + Math.round((data.loaded * 100.0) / data.total) + "%");
-                    },
-                    fail: function (e, data) {
-                        $(".status").text("Upload failed");
-                    }
-                })
-                .off("cloudinarydone").on("cloudinarydone", function (e, data) {
-                    $("#photo_bytes").val(data.result.bytes);
-                    $(".status").text("");
-                    if (data.result.resource_type == "image") {
-                        $(".preview").html(
-                                $.cloudinary.image(data.result.public_id, {
-                                    format: data.result.format, width: 50, height: 50, crop: "fit"
-                                })
-                        );
-                    }
-                    view_upload_details(data.result);
-                });
-    });
+        if (!(password2 == "")){
 
-    function view_upload_details(upload) {
-        // Build an html table out of the upload object
-        var rows = [];
-        .each(upload, function(k,v){
-            rows.push(
-                    $("<tr>")
-                            .append($("<td>").text(k))
-                            .append($("<td>").text(JSON.stringify(v))));
-        });
-        $("#info").html(
-                $("<div class=\"upload_details\">")
-                        .append("<h2>Upload metadata:</h2>")
-                        .append($("<table>").append(rows)));
+            setCookie("password2", password2, 1);
+        }
+        else
+        {
+            setCookie("password2", "", 1);
+
+        }
+
+        if (!(password3 == "")){
+
+            setCookie("password3", password3, 1);
+        }
+        else
+        {
+            setCookie("password3", "", 1);
+
+        }
+
+        window.opener.confirmExit();
+        window.close();
     }
 </script>
 
+<script>
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays*24*60*60*1000));
+        var expires = "expires="+ d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+</script>
 <%@include file="post.jsp"%>

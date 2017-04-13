@@ -91,7 +91,7 @@
 
     </canvas>
     <a id="addPhotoButton" class= "upload_link" onclick="popupCenter('upload_form', 'myPop1',600,375);" href="javascript:void(0);">Add Image</a>
-    <a id= "addPasswordButton" class= "upload_link" onclick="popupCenter('text_input', 'myPop1',450,450);" href="javascript:void(0);">List of Passwords</a>
+    <a id= "addPasswordButton" class= "upload_link" onclick="popupCenter('direct_upload_form', 'myPop1',450,330);" href="javascript:void(0);">List of Passwords</a>
 
     <form:form cssStyle="border: none" method="post" action = "transform" modelAttribute="returnURL" enctype="multipart/form-data">
     <div id = "transformButton" class="form_line">
@@ -99,6 +99,9 @@
     <input id="imageurl" name="imageurl" type="hidden" value="">
     <input id="imageformat" name="imageformat" type="hidden" value="">
     <input id="imageid" name="imageid" type="hidden" value="">
+    <input id="password_input1" name="password_input1" type="hidden" value="">
+    <input id="password_input2" name="password_input2" type="hidden" value="">
+    <input id="password_input3" name="password_input3" type="hidden" value="">
     <input  class="upload_link" type="submit" value="Transform Pictures"/>
     </div>
     </div>
@@ -115,9 +118,38 @@
 <%@include file="post.jsp"%>
 
 <script>
+
     function popupCenter(url, title, w, h) {
-        var left = (screen.width/2)-(w/2);
-        var top = (screen.height/2)-(h/2);
-        return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+        var left = (screen.width / 2) - (w / 2);
+        var top = (screen.height / 2) - (h / 2);
+        var win = window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+    }
+
+    function confirmExit()
+    {
+        var cookie1 =getCookie("password1");
+        var cookie2 =getCookie("password2");
+        var cookie3 =getCookie("password3");
+
+        document.getElementById("password_input1").value = cookie1;
+        document.getElementById("password_input2").value = cookie2;
+        document.getElementById("password_input3").value = cookie3;
+        return true;
+    }
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for(var i = 0; i <ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
     }
 </script>

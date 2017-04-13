@@ -15,6 +15,12 @@ html{
     overflow: scroll;
 }
 
+#input_text
+{
+    position:fixed;
+
+}
+
 #mainHeader {
     width: auto;
     height: 150px;
@@ -34,7 +40,6 @@ html{
 }
 #welcomeHeader{
     float: right;
-    right: 20%;
     display: inline;
 
 }
@@ -91,7 +96,7 @@ html{
     height:90%;
     top: 20px;
     right: 20px;
-    left: 20%;
+    left: 20.5%;
     bottom: 20px;
     float: right;
     position: absolute;
@@ -100,7 +105,7 @@ html{
 #galleryContainer{
     background-color: #0e2953;
     float: left;
-    width:18%;
+    width:18.5%;
     height : 90%;
     top: 20px;
     left: 20px;
@@ -108,7 +113,8 @@ html{
     position: relative;
     overflow: scroll;
     align-content: center;
-    align-items: center;
+
+
 }
 
 #addPhotoButton{
@@ -139,7 +145,7 @@ html{
 
 }
 
-.photo { margin: 10px; padding: 10px; border-top: 2px solid #ccc; align-content: center }
+.photo { margin: 10px; padding: 10px; border-top: 2px solid #ccc; }
 .photo .thumbnail { margin-top: 10px; display: block; max-width: 200px; border: none; }
 .toggle_info { margin-top: 10px; font-weight: bold; color: #e62401; display: block; }
 .thumbnail_holder { height: 182px; margin-bottom: 5px; margin-right: 10px; }
