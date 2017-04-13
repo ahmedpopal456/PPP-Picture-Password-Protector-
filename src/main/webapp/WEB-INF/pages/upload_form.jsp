@@ -54,6 +54,4 @@
     </form:form>
 
 </div>
-
-<a href="<c:url value="http://localhost:8080/homepage"/>" class="back_link">Back to list</a>
 <%@include file="post.jsp"%>

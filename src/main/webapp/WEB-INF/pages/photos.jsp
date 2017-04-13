@@ -8,62 +8,45 @@
 <%
     FBConnection fbConnection = new FBConnection();
 %>
-
-<body>
-<div id="fb-root"></div>
-</body>
-<%--<div id="posterframe">--%>
-<%--<!-- This will render the fetched Facebook profile picture using Cloudinary according to the--%>
-<%--requested transformations. This also shows how to chain transformations -->--%>
-<%--<cl:image src="officialchucknorrispage" type="facebook" format="png" height="95" width="95" crop="thumb" gravity="face" effect="sepia" radius="20">--%>
-    <%--<jsp:attribute name="transformation">--%>
-        <%--<cl:transformation angle="10"/>--%>
-    <%--</jsp:attribute>--%>
-<%--</cl:image>--%>
-<%--</div>--%>
-
-<h1>Welcome ${current_user_name} !</h1>
-
-<p>
-    This is a work in progress to simply upload and save images to the Google App Engine Data Store
-</p>
-
-<p>
-    Select one of the options below. Using the Cloudinary REST API it will upload an image using uploader. This image will be saved into the Data Store
-</p>
-<div>
-    <a href = "/logout">Logout from Facebook</a></div>
+<body id="photoPage">
+<div id = "mainHeader" >
+    <h1 id = "welcomeMainHeader">Picture Password Protector </h1>
+    <h2 id="welcomeHeader">Welcome ${current_user_name} </h2>
+    <div>
+        <a href = "/logout">Logout from Facebook</a></div>
 </div>
-<h1>Your Photos</h1>
-<div class="actions">
-    <%--<input type=“hidden” name=“userid” value = ${current_user_id}/>--%>
-    <a class="upload_link" href="upload_form">Add photo</a>
-    <a class="upload_link" href="direct_upload_form">Add photo (direct upload)</a>
 </div>
-<div class="photos">
-    <c:if test="empty photos}">
-        <p>No photos were added yet.</p>
-    </c:if>
 
-    <canvas id="canvas" width="900" height="800"></canvas>
-    <c:if test="${!empty photos}">
-        <c:forEach items="${photos}" var="photo">
-            <button id="${photo.publicId}" class= "photo">
-                <h2>${photo.title}</h2>
-                <c:if test="${photo.isImage}">
-                    <a href="<cl:url storedSrc="${photo}" format="jpg"/>" target="_blank">
-                        <cl:image storedSrc="${photo}" extraClasses="thumbnail inline" width="150" height="150" crop="fit" quality="80" format="jpg"/>
-                    </a>
-                    <td>
-                        <br/>
-                    </td>
-                </c:if>
-                <c:if test="${!photo.isImage}">
-                    <a href="<cl:url storedSrc="${photo}"/>" target="_blank">Non Image File</a>
-                </c:if>
-            </button>
-        </c:forEach>
-    </c:if>
+<div id = "mainTabs">
+    <a class = "tabButton" href="<c:url value="http://localhost:8080/homepage"/>" class="back_link">HOME</a>
+    <a class = "tabButton" href="<c:url value="http://localhost:8080/gallery"/>" class="back_link">TRANSFORMED GALLERY</a>
+    <a class = "tabButton" href="<c:url value="http://localhost:8080/help"/>" class="back_link">HELP</a>
+</div>
+
+<div id = "photoBody">
+
+    <div id="galleryContainer">
+        <c:if test="empty photos}">
+            <p>No photos were added yet.</p>
+        </c:if>
+        <c:if test="${!empty photos}">
+            <c:forEach items="${photos}" var="photo">
+                <button id="${photo.publicId}" class= "photo">
+                    <h2>${photo.title}</h2>
+                    <c:if test="${photo.isImage}">
+                        <a href="<cl:url storedSrc="${photo}" format="jpg"/>" target="_blank">
+                            <cl:image storedSrc="${photo}" extraClasses="thumbnail inline" width="250" height="150" crop="fit" quality="100" format="jpg"/>
+                        </a>
+                        <td>
+                            <br/>
+                        </td>
+                    </c:if>
+                    <c:if test="${!photo.isImage}">
+                        <a href="<cl:url storedSrc="${photo}"/>" target="_blank">Non Image File</a>
+                    </c:if>
+                </button>
+            </c:forEach>
+        </c:if>
 
         <script type='text/javascript'>
 
@@ -75,16 +58,20 @@
                 var ctx = $("canvas")[0].getContext("2d"),
                     img = new Image();
 
+                ctx.canvas.width = window.innerWidth*0.78;
+                ctx.canvas.height = window.innerHeight*0.90;
+
                 img.onload = function(){
-                    ctx.drawImage(img, 0, 0, 900 , 800 );
+                    ctx.drawImage(img, 0, 0, ctx.canvas.width, ctx.canvas.height);
                     $("span").text("Loaded.");
                 };
-                img.src = url;
+                img.src =  url;
                 $("span").text("Loading...");
 
                 imageurl = url;
                 imageid = id;
                 imageformat = format;
+
 
                 document.getElementById("imageurl").value = imageurl;
                 document.getElementById("imageformat").value = imageformat;
@@ -98,16 +85,39 @@
             </c:forEach>
             </c:if>
         </script>
-    <%--</div>--%>
-    <form:form method="post" action = "transform" modelAttribute="returnURL" enctype="multipart/form-data">
-        <div class="form_line">
-            <div class="form_controls">
-                <input id="imageurl" name="imageurl" type="hidden" value="">
-                <input id="imageformat" name="imageformat" type="hidden" value="">
-                <input id="imageid" name="imageid" type="hidden" value="">
-                <input type="submit" value="Transform Pictures"/>
-            </div>
-        </div>
-    </form:form>
+    </div>
 
+    <canvas id = "canvas">
+
+    </canvas>
+    <a id="addPhotoButton" class= "upload_link" onclick="popupCenter('upload_form', 'myPop1',600,375);" href="javascript:void(0);">Add Image</a>
+    <a id= "addPasswordButton" class= "upload_link" onclick="popupCenter('text_input', 'myPop1',450,450);" href="javascript:void(0);">List of Passwords</a>
+
+    <form:form cssStyle="border: none" method="post" action = "transform" modelAttribute="returnURL" enctype="multipart/form-data">
+    <div id = "transformButton" class="form_line">
+    <div class="form_controls">
+    <input id="imageurl" name="imageurl" type="hidden" value="">
+    <input id="imageformat" name="imageformat" type="hidden" value="">
+    <input id="imageid" name="imageid" type="hidden" value="">
+    <input  class="upload_link" type="submit" value="Transform Pictures"/>
+    </div>
+    </div>
+    </form:form>
+</div>
+
+</body>
+<script type='text/javascript'>
+    $('.toggle_info').click(function () {
+        $(this).next('.photo').show();
+        return false;
+    });
+</script>
 <%@include file="post.jsp"%>
+
+<script>
+    function popupCenter(url, title, w, h) {
+        var left = (screen.width/2)-(w/2);
+        var top = (screen.height/2)-(h/2);
+        return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+    }
+</script>

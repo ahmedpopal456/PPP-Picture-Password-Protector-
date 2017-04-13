@@ -20,9 +20,6 @@
     </a>
 </div>
 </c:if>
-
-<a href="<c:url value="http://localhost:8080/homepage"/>" class="back_link">Back to list</a>
-
 <c:if test="${!empty upload}">
 <div class="upload_details">
     <h2>Upload metadata:</h2>
