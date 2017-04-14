@@ -10,7 +10,7 @@ This web application, which was designed as a service running on the Google Clou
 2- PPP therefore allows its users to upload images to its server, and then blend different passwords into it. PPP will detect the best position where the passwords should be hidden, and returns the transformed image to the user.
 
 
-** Current algorithm focuses on a linear approach to detect password coordinates. This will be changed to a random hill-climbing algorithm , where the picture's width and height determine the environment in which multiple problem-solving agents
+* Current algorithm focuses on a linear approach to detect password coordinates. This will be changed to a random hill-climbing algorithm , where the picture's width and height determine the environment in which multiple problem-solving agents
 will be searching for optimum coordinates where to store the passwords. Each agent will move in a set circular motion,for a timeout
 -------------------------------------------------
 
