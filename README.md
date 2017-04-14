@@ -5,9 +5,11 @@ WELCOME TO THE PICTURE PASSWORD PROTECTOR (PPP) !
 
 This web application, which was designed as a service running on the Google Cloud (GAE), serves as a tool that are meant for users who:
 
-1- Are subscribed to a multitude of password-protected services 2- Have a difficulty in remember all of the various passwords they hold for these services
+1- Are subscribed to a multitude of password-protected services 
 
-2- PPP therefore allows its users to upload images to its server, and then blend different passwords into it. PPP will detect the best position where the passwords should be hidden, and returns the transformed image to the user.
+2- Have a difficulty in remember all of the various passwords they hold for these services
+
+PPP therefore allows its users to upload images to its server, and then blend different passwords into it. PPP will detect the best position where the passwords should be hidden, and will return the transformed image to the user.
 
 
 
