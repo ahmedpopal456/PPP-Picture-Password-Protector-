@@ -14,7 +14,7 @@ PPP therefore allows its users to upload images to its server, and then blend di
 
 
 * Current algorithm focuses on a linear approach to detect password coordinates. This will be changed to a random hill-climbing algorithm , where the picture's width and height determine the environment in which multiple problem-solving agents
-will be searching for optimum coordinates where to store the passwords. Each agent will move in a set circular motion,for a timeout
+will be searching for optimum coordinates where to store the passwords. Each agent will move in a set circular motion,for a set length
 -------------------------------------------------
 
 APPLICATION BASED ON INITIAL FOLLOWING DRAFT: 
