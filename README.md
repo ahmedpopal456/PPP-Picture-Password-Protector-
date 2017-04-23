@@ -1,4 +1,4 @@
-Google Cloud Engine Based Application- http://coen498-project.appspot.com/homepage
+Google Cloud Engine Based Application- coen498-project.appspot.com
 
 
 WELCOME TO THE PICTURE PASSWORD PROTECTOR (PPP) !
