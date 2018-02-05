@@ -3,7 +3,7 @@ Google Cloud Engine Based Application- coen498-project.appspot.com
 
 WELCOME TO THE PICTURE PASSWORD PROTECTOR (PPP) !
 
-This web application, which was designed as a service running on the Google Cloud (GAE), serves as a tool that are meant for users who:
+This web application, which was designed as a service running on the Google Cloud (GAE), serves as a tool that is meant for users who:
 
 1- Are subscribed to a multitude of password-protected services 
 
